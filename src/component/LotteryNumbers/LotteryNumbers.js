@@ -7,7 +7,7 @@ import LotteryButton from '../LotteryButton/LotteryButton';
 
 const NumberContainer = styled.div`
     width: 90%;
-    height: 70%;
+    height: 100%;
     margin: auto;
     align-text: center;
     display: flex;
@@ -17,10 +17,18 @@ const NumberContainer = styled.div`
 
 const lotteryNumbers = (props) => {
 
-    const transformedNumbers = Object.keys(props.numbers)
+    let transformedNumbers;
+    const numbers = props.numbers
+
+    transformedNumbers = Object.keys(numbers)
         //[first, second, third, ... , bonus];
-        .map((number, index) => {
-            return <LotteryNumber key={number+index}>{props.numbers[number]}</LotteryNumber>
+        .map((order, index) => {
+
+            if (Object.keys(numbers).length - 1 === index) {
+                return <LotteryNumber bonusNumber key={order+index}>{numbers[order]}</LotteryNumber>
+            }
+
+            return <LotteryNumber key={order+index}>{numbers[order]}</LotteryNumber>
         });
 
     return (

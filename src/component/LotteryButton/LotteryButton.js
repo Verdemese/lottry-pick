@@ -3,11 +3,16 @@ import styled from 'styled-components';
 
 const StyledButton = styled.button`
     outline: none;
-    width: 70px;
-    height: 70px;
+    font-size: 2rem;
+    width: 8rem;
+    height: 4rem;
     margin-top: 25px;
-    background-color: rgb(148, 144, 143, 0.4);
-    color: white;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 5px rgb(0, 0, 0, 0.3);
+    background-color: #fff;
+    color: #666;
+    text-align: center;
 
     &:active {
         background-color: rgb( 97, 93, 92, 0.4 );
@@ -16,7 +21,7 @@ const StyledButton = styled.button`
 `
 
 const lotteryButton = (props) => (
-    <StyledButton onClick={props.clicked}>GO get and win!!</StyledButton>
+    <StyledButton onClick={props.clicked}>Start!!</StyledButton>
 )
 
 export default lotteryButton;

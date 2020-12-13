@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import LotteryButton from '../../component/LotteryButton/LotteryButton';
 import LotteryNumbers from '../../component/LotteryNumbers/LotteryNumbers';
 
-
 const StyledDiv = styled.div`
-    height: 200px;
-    width: 500px;
+    background-color: #eee;
+    border: 2px solid pink;
+    border-radius: 20px;
+    height: 150px;
+    width: 800px;
     margin: auto;
     text-align: center;
 `
@@ -26,79 +27,41 @@ class LotteryControl extends Component {
         sortedNumbers: []
     }
 
-    pickRandomNumber = () => {
-        let randomNumber = Math.ceil(Math.random() * 45);
-        return randomNumber;
-    } 
+    pickRandomNumberHandler = () => {
 
-    sortNumbers = (object) => {
-        const sortedNumbers = Object.values({...object})
-            .sort((a, b) => a - b);
+        const lotteryNumberContainer = []; // [1~45]
+        const pickedNumberContainer = []; // [1,2,3,4,5,6]
+        const numbers = { ...this.state.numbers }
+        let sortedNumbers;
 
-        return sortedNumbers;
-    }
+        for (let i = 1; i < 46; i++) {
+            lotteryNumberContainer.push(i);
+        }
 
-    removeRepititiveNumber = (numbers) => {
-        //'numbers' are array
-        const comparison = [...numbers];
-        const temp = [...numbers];
+        for (let i = 0; i < 7; i++) {
+            const randomNumber = Math.ceil(Math.random() * lotteryNumberContainer.length-1);
 
-        numbers.forEach((number, index) => {
-            comparison.forEach((comparisonNumber, comparisonIndex) => {
-                if (index !== comparisonIndex && number === comparisonNumber) {
-                    temp.splice(index, 1, this.pickRandomNumber());
-                    if (temp.findIndex((el, index) => el === )){}
-                }
-            });
-        });
+            pickedNumberContainer[i] = lotteryNumberContainer.splice(randomNumber, 1)[0];
+        }
 
-        console.log(temp);
-    }
+        Object.keys(numbers)
+            .forEach((order,index) => {
+                numbers[order] = pickedNumberContainer[index];
+            })        
 
-    changeNumbers = () => {
-        const numbers = { ...this.state.numbers };
-
-        let pickedNumber = 0;
-
-        const transformedNumbers = Object.keys(numbers)
-            .forEach(number => {
-
-                const randomNumber = this.pickRandomNumber();
-
-                if (pickedNumber === randomNumber) {
-                    //new number as if there is repititive number
-                    const NotRepititionNumber = this.pickRandomNumber()
-
-                    pickedNumber = NotRepititionNumber;
-                    
-                    numbers[number] = NotRepititionNumber;
-                } else {
-                    pickedNumber = randomNumber;
-                    
-                    numbers[number] = randomNumber;
-                }
-                numbers[number] = randomNumber;
-            });
-        
-        // debugger;
-        const sortedNumbers = this.sortNumbers(numbers);
+        sortedNumbers = pickedNumberContainer.sort((a, b) => a - b);
 
         this.setState({ numbers: numbers, sortedNumbers: sortedNumbers });
     }
 
-
     render() {
-
-        // console.log(this.state);
-
-        this.removeRepititiveNumber(this.state.sortedNumbers);
 
         return (
             <StyledDiv>
                 <LotteryNumbers 
                     numbers={this.state.numbers} 
                     sortedNumbers={this.state.sortedNumbers}
-                    clicked={this.changeNumbers} />
+                    clicked={this.pickRandomNumberHandler} />
             </StyledDiv>
         );
     }

@@ -1,5 +1,12 @@
+*, *::after, *::before  { 
+  box-sizing: border-box;
+  font-family: 'Nanum Pen Script', cursive;
+}
+
 .App {
+  background-color: #f4d9be;
   height: 100vh;
+  font-size: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
